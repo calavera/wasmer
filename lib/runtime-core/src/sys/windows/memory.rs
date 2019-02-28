@@ -4,11 +4,11 @@ use page_size;
 use std::ops::{Bound, RangeBounds};
 use std::{ptr, slice};
 use winapi::um::memoryapi::{VirtualAlloc, VirtualFree};
-use winapi::um::winnt::MEM_RELEASE;
 use winapi::um::winnt::{
     MEM_COMMIT, MEM_DECOMMIT, MEM_RESERVE, PAGE_EXECUTE_READ, PAGE_NOACCESS, PAGE_READONLY,
     PAGE_READWRITE,
 };
+use winapi::um::winnt::MEM_RELEASE;
 
 unsafe impl Send for Memory {}
 unsafe impl Sync for Memory {}
@@ -166,13 +166,7 @@ impl Memory {
 impl Drop for Memory {
     fn drop(&mut self) {
         if !self.ptr.is_null() {
-            let success = unsafe {
-                VirtualFree(
-                    self.ptr as _,
-                    0, /*must be zero according to msdn */
-                    MEM_RELEASE,
-                )
-            };
+            let success = unsafe { VirtualFree(self.ptr as _, self.size, MEM_RELEASE) };
             // If the function succeeds, the return value is nonzero.
             assert_eq!(success, 1, "failed to unmap memory: {}", errno::errno());
         }
