@@ -36,8 +36,7 @@ build_script:
 #  - cargo build --release --verbose
 
 test_script:
-  - set RUST_BACKTRACE=1
-  - cd ./lib/spectests && cargo test -- --test-threads 1 && cd ../..
+  - cargo test --package wasmer-spectests
 
 after_build:
 #  - cd ./src/installer
