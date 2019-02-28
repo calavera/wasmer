@@ -17,6 +17,7 @@ cache:
   - 'C:\projects\wasmer\target'
 
 install:
+  # uncomment these lines if the cache is cleared, or if we must re-install rust for some reason
   # - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
   # - rustup-init.exe -yv --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
@@ -30,18 +31,17 @@ install:
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
 
 build_script:
-  - echo building!
-#  - cargo build --release --verbose
+  - cargo build --release --verbose
 
 test_script:
   - cargo test --package wasmer-spectests
 
 after_build:
-#  - cd ./src/installer
-#  - iscc wasmer.iss
-#  - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-0.2.1.exe
-#  - appveyor PushArtifact ..\..\WasmerInstaller-0.2.1.exe
-#  - cd ..\..\
+  - cd ./src/installer
+  - iscc wasmer.iss
+  - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-0.2.1.exe
+  - appveyor PushArtifact ..\..\WasmerInstaller-0.2.1.exe
+  - cd ..\..\
 
 deploy:
   description: 'WasmerInstaller'
