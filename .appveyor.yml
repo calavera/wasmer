@@ -34,7 +34,7 @@ test_script:
   - set RUST_BACKTRACE=1
   - cd ./lib/spectests && cargo test -- --test-threads 1 && cd ../..
 
-before_deploy:
+after_build:
   - cd ./src/installer
   - iscc wasmer.iss
   - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-0.2.1.exe
