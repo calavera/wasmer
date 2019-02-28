@@ -12,24 +12,21 @@ environment:
       ABI: msvc
       TARGET: x86_64-pc-windows-msvc
 
-#init:
-#  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 cache:
   - 'C:\Users\appveyor\.cargo'
   - 'C:\projects\wasmer\target'
 
 install:
-  - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
-  - rustup-init.exe -yv --default-host %target%
+  # - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
+  # - rustup-init.exe -yv --default-host %target%
   - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+  - rustup update
   - rustc -vV
   - cargo -vV
   # Install InnoSetup
   - appveyor-retry appveyor DownloadFile https://s3-us-west-1.amazonaws.com/rust-lang-ci2/rust-ci-mirror/2017-08-22-is.exe
   - 2017-08-22-is.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 build_script:
   - echo building!
