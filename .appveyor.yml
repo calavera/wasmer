@@ -37,7 +37,7 @@ after_build:
   - if defined APPVEYOR_REPO_TAG_NAME cd ./src/installer
   - if defined APPVEYOR_REPO_TAG_NAME iscc wasmer.iss
   - if defined APPVEYOR_REPO_TAG_NAME copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
-  - if defined APPVEYOR_REPO_TAG_NAME appveyor PushArtifact WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
+  - if defined APPVEYOR_REPO_TAG_NAME appveyor PushArtifact ..\..\WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
 
 deploy:
   description: 'WasmerInstaller'
