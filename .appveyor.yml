@@ -39,6 +39,7 @@ after_build:
   - iscc wasmer.iss
   - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-0.2.1.exe
   - appveyor PushArtifact ..\..\WasmerInstaller-0.2.1.exe
+  - cd ..\..\
 
 deploy:
   description: 'WasmerInstaller'
