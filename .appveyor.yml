@@ -33,15 +33,11 @@ test_script:
   - set RUST_BACKTRACE=1
   - cd ./lib/spectests && cargo test -- --test-threads 1 && cd ../..
 
-before_deploy:
-  - cd ./src/installer
-  - iscc wasmer.iss
-  - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
-  - appveyor PushArtifact WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
-
-artifacts:
-  - path: WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
-    name: WasmerInstaller.exe
+after_build:
+  - if defined APPVEYOR_REPO_TAG_NAME cd ./src/installer
+  - if defined APPVEYOR_REPO_TAG_NAME iscc wasmer.iss
+  - if defined APPVEYOR_REPO_TAG_NAME copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
+  - if defined APPVEYOR_REPO_TAG_NAME appveyor PushArtifact WasmerInstaller-%APPVEYOR_REPO_TAG_NAME%.exe
 
 deploy:
   description: 'WasmerInstaller'
