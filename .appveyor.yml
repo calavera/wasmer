@@ -14,7 +14,7 @@ environment:
 
 cache:
   - 'C:\Users\appveyor\.cargo'
-  - 'C:\projects\wasmer\target'
+  - target
 
 install:
   # uncomment these lines if the cache is cleared, or if we must re-install rust for some reason
