@@ -31,7 +31,7 @@ install:
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
 
 build_script:
-  - echo building
+  - echo building!
 #  - cargo build --release --verbose
 
 test_script:
