@@ -12,6 +12,9 @@ environment:
       ABI: msvc
       TARGET: x86_64-pc-windows-msvc
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 cache:
   - 'C:\Users\appveyor\.cargo'
   - 'C:\projects\wasmer\target'
@@ -28,18 +31,19 @@ install:
   - set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
 
 build_script:
-  - cargo build --release --verbose
+  - echo building
+#  - cargo build --release --verbose
 
 test_script:
   - set RUST_BACKTRACE=1
   - cd ./lib/spectests && cargo test -- --test-threads 1 && cd ../..
 
 after_build:
-  - cd ./src/installer
-  - iscc wasmer.iss
-  - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-0.2.1.exe
-  - appveyor PushArtifact ..\..\WasmerInstaller-0.2.1.exe
-  - cd ..\..\
+#  - cd ./src/installer
+#  - iscc wasmer.iss
+#  - copy /y .\WasmerInstaller.exe ..\..\WasmerInstaller-0.2.1.exe
+#  - appveyor PushArtifact ..\..\WasmerInstaller-0.2.1.exe
+#  - cd ..\..\
 
 deploy:
   description: 'WasmerInstaller'
