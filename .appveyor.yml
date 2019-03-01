@@ -34,7 +34,7 @@ build_script:
   - cargo build --release --verbose
 
 test_script:
-  - cargo test --package wasmer-spectests
+  - cargo test --package wasmer-spectests -- --test-threads=1
 
 after_build:
   - cd ./src/installer
