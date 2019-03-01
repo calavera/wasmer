@@ -40,7 +40,11 @@ exceptionHandler(struct _EXCEPTION_POINTERS *ExceptionInfo) {
 }
 
 static void removeExceptionHandler() {
+    if (exceptionHandlerInstalled == FALSE) {
+        return;
+    }
     RemoveVectoredExceptionHandler(handle);
+    exceptionHandlerInstalled = FALSE;
 }
 
 uint8_t callProtected(trampoline_t trampoline,
